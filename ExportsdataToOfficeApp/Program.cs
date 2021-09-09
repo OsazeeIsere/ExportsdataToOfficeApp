@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Diagnostics;
 namespace ExportsdataToOfficeApp
 {
     using Excel = Microsoft.Office.Interop.Excel;
@@ -11,6 +12,8 @@ namespace ExportsdataToOfficeApp
     {
         static void Main(string[] args)
         {
+            StartAndKillProcess();
+
             List<Car> carsInStock = new List<Car>
             {
                 new Car{Color="Green",Make="VM",PetName="Mary"},
@@ -21,6 +24,25 @@ namespace ExportsdataToOfficeApp
 
             };
             ExportToExcel(carsInStock);
+        }
+
+        private static void StartAndKillProcess()
+        {
+            Process ffProc = null;
+            //launch Fireforce and go to facebook!
+            try
+            {
+                ProcessStartInfo staryInfo= new ProcessStartInfo("FireFox.exe", "www.jw.org");
+                staryInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                ffProc = Process.Start(staryInfo);
+
+            }
+            catch(InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            //you can kill a process with the method Kill() eg: processName.Kill()
         }
 
         private static void ExportToExcel(List<Car> carsInTheStock)
